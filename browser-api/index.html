@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="gaya.css">
+</head>
+<body>
+    <div id="demo">
+        <h2>Formulir mahasiswa</h2>
+        <div id="form"> 
+            <form action="">
+                <input type="text" name="nama" placeholder="Nama Siswa">
+                <input type="text" name="nim" placeholder="NIM">
+                <select name="jurusan">
+                    <option value="Teknik Informatika">Teknik Informatika</option>
+                    <option value="Teknik Fisika">Teknik FISIKA</option>
+                    <option value="Teknik eLEKTRO">Teknik eLEKTRO</option>
+                </select>
+                <button id="submit">submit</button>
+            </form>
+        </div>
+        <div id="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>NIM</th>
+                        <th>jurusan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        isiT();
+        const submit=document.getElementById("submit"); 
+        const nama=document.getElementsByName("nama")[0];
+        const nim=document.getElementsByName("nim")[0];
+        const jurusan=document.getElementsByName("jurusan")[0];
+        submit.onclick = function(kejadian){
+            kejadian.preventDefault();
+            const nnma=nama.value;
+            const nnm=nim.value;
+            const jjrusan=jurusan.value;
+            const barisT={
+                nnma,
+                nnm,
+                jjrusan,
+            };
+            console.log(barisT);
+            let array=[];
+            array.push(barisT);
+            const local=localStorage.getItem("arraystr");
+            let arrayBrs=JSON.parse(local);
+            arrayBrs.push(barisT);
+
+            const arraystr=JSON.stringify(arrayBrs);
+            
+            localStorage.setItem("arraystr",arraystr);
+            isiT();
+        }
+
+        function isiT(){
+            const eltable=document.querySelector("#table table tbody");
+
+            const arraystr=localStorage.getItem("arraystr")
+            const array=JSON.parse(arraystr);
+
+            eltable.innerHTML=``;
+            array.forEach(barisT => {
+                eltable.innerHTML += `
+                <tr>
+                  <td>${barisT.nnma}</td>
+                  <td>${barisT.nnm}</td>
+                  <td>${barisT.jjrusan}</td>
+                </tr>
+                `;
+                
+            });
+        }
+
+    </script>
+</body>
+</html>
